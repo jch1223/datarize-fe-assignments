@@ -13,11 +13,20 @@ export const Dashboard = () => {
         <DateRangeFilter />
       </div>
 
-      <ErrorBoundary fallback={<PriceRangeSalesChart.Error />}>
-        <Suspense fallback={<PriceRangeSalesChart.Skeleton />}>
-          <PriceRangeSalesChart />
-        </Suspense>
-      </ErrorBoundary>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            fallbackRender={({ resetErrorBoundary, error }) => (
+              <PriceRangeSalesChart.Error error={error} onReset={resetErrorBoundary} />
+            )}
+          >
+            <Suspense fallback={<PriceRangeSalesChart.Skeleton />}>
+              <PriceRangeSalesChart />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
 
       <div>
         <QueryErrorResetBoundary>

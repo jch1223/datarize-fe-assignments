@@ -130,7 +130,7 @@ const CustomerNotFound = ({ onReset }: { onReset: () => void }) => {
   return (
     <div>
       <SearchNameInput name={filter.name} onSubmit={handleNameSubmit} onReset={handleResetFilter} />
-      <div>고객이 없습니다. 다른 고객을 검색해주세요.</div>
+      <div>고객이 없습니다. 다시 검색해주세요.</div>
     </div>
   )
 }
