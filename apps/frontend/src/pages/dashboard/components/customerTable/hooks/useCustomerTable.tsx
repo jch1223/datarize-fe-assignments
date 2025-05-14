@@ -61,7 +61,12 @@ export const useCustomerTable = () => {
     {
       accessorKey: 'totalAmount',
       header: () => (
-        <Button variant="ghost" onClick={() => updateSortBy(filter.sortBy === 'asc' ? 'desc' : 'asc')}>
+        <Button
+          variant="ghost"
+          onClick={() =>
+            updateSortBy(filter.sortBy === undefined ? 'desc' : filter.sortBy === 'desc' ? 'asc' : undefined)
+          }
+        >
           총 주문 금액
           <ArrowUpDown />
         </Button>
@@ -72,7 +77,7 @@ export const useCustomerTable = () => {
     },
   ]
 
-  const updateSortBy = (sortBy: 'asc' | 'desc') => {
+  const updateSortBy = (sortBy: 'asc' | 'desc' | undefined) => {
     setFilter({ ...filter, sortBy })
   }
 
