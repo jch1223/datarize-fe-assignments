@@ -12,8 +12,8 @@ export const Dashboard = () => {
         <DateRangeFilter />
       </div>
 
-      <ErrorBoundary fallback={<div>Error</div>}>
-        <Suspense fallback={<div>Loading...</div>}>
+      <ErrorBoundary fallback={<PriceRangeSalesChart.Error />}>
+        <Suspense fallback={<PriceRangeSalesChart.Skeleton />}>
           <PriceRangeSalesChart />
         </Suspense>
       </ErrorBoundary>
