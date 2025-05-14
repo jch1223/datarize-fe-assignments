@@ -1,4 +1,5 @@
 import { CustomerTable } from '@/pages/dashboard/components/customerTable/customerTable'
+import { Layout } from '@/pages/dashboard/components/customerTable/layout/layout'
 import { DateRangeFilter } from '@/pages/dashboard/components/dateRangeFilter/dateRangeFilter'
 import { PriceRangeSalesChart } from '@/pages/dashboard/components/priceRangeSalesChart'
 import { ErrorBoundary } from '@/shared/ui/errorBoundary'
@@ -6,7 +7,7 @@ import { Suspense } from 'react'
 
 export const Dashboard = () => {
   return (
-    <div>
+    <Layout>
       <div>
         <DateRangeFilter />
       </div>
@@ -25,6 +26,6 @@ export const Dashboard = () => {
           </Suspense>
         </ErrorBoundary>
       </div>
-    </div>
+    </Layout>
   )
 }
