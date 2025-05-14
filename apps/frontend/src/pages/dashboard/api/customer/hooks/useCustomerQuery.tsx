@@ -1,14 +1,14 @@
-import { customerApi, GetCustomerParams } from '@/pages/dashboard/api/customer/customer'
+import { customerApi, GetCustomersParams } from '@/pages/dashboard/api/customer/customer'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 const customerQueryKey = {
   all: ['customer'],
-  list: (params?: GetCustomerParams) => [...customerQueryKey.all, 'list', params],
+  list: (params?: GetCustomersParams) => [...customerQueryKey.all, 'list', params],
 }
 
-export const useCustomerQuery = (params?: GetCustomerParams) => {
+export const useCustomersQuery = (params?: GetCustomersParams) => {
   return useSuspenseQuery({
     queryKey: customerQueryKey.list(params),
-    queryFn: () => customerApi.getCustomer(params),
+    queryFn: () => customerApi.getCustomers(params),
   })
 }
