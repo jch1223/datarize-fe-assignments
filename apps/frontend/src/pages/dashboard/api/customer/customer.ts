@@ -15,6 +15,16 @@ export interface Customer {
 
 type GetCustomersResponse = Customer[]
 
+type PurchaseProduct = {
+  date: string
+  quantity: number
+  product: string
+  price: number
+  imgSrc: string
+}
+
+type GetCustomerPurchasesResponse = PurchaseProduct[]
+
 export const customerApi = {
   getCustomers: async (params?: GetCustomersParams) => {
     const response = await ky.get<GetCustomersResponse>(`${API_URL}/api/customers`, {
@@ -26,7 +36,7 @@ export const customerApi = {
     return response.json()
   },
   getCustomer: async (id: string) => {
-    const response = await ky.get<Customer>(`${API_URL}/api/customer/${id}/purchases`)
+    const response = await ky.get<GetCustomerPurchasesResponse>(`${API_URL}/api/customers/${id}/purchases`)
     return response.json()
   },
 }
