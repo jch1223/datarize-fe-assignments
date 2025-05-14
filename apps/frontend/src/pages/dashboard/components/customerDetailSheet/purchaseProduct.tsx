@@ -1,3 +1,4 @@
+import { Skeleton } from '@/shared/ui/skeleton'
 import { format } from 'date-fns'
 
 interface PurchaseProductProps {
@@ -36,3 +37,32 @@ export const PurchaseProduct = ({ date, product, price, quantity, imgSrc }: Purc
     </div>
   )
 }
+
+const PurchaseProductSkeleton = () => {
+  return (
+    <div className="flex flex-col gap-2">
+      <Skeleton className="h-6 w-40" />
+
+      <div className="flex gap-4">
+        <Skeleton className="w-40 h-40 rounded-md" />
+
+        <div className="flex flex-col gap-2 flex-1">
+          <div className="flex justify-between">
+            <Skeleton className="h-5 w-20" />
+            <Skeleton className="h-5 w-32" />
+          </div>
+          <div className="flex justify-between">
+            <Skeleton className="h-5 w-20" />
+            <Skeleton className="h-5 w-24" />
+          </div>
+          <div className="flex justify-between">
+            <Skeleton className="h-5 w-20" />
+            <Skeleton className="h-5 w-16" />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+PurchaseProduct.Skeleton = PurchaseProductSkeleton

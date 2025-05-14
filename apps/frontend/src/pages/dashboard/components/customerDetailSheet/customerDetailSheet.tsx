@@ -1,8 +1,10 @@
 import { useCustomerQuery } from '@/pages/dashboard/api/customer/hooks/useCustomerQuery'
 import { PurchaseProduct } from '@/pages/dashboard/components/customerDetailSheet/purchaseProduct'
-import { ErrorBoundary } from '@/shared/ui/errorBoundary'
+import { Button } from '@/shared/ui/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/shared/ui/sheet'
+import { QueryErrorResetBoundary } from '@tanstack/react-query'
 import { Suspense } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 
 interface CustomerDetailProps {
   id: string
@@ -21,14 +23,39 @@ export const CustomerDetailSheet = ({ id, name, children }: CustomerDetailProps)
         </SheetHeader>
 
         <div className="flex flex-col gap-4 px-4 overflow-y-auto">
-          <ErrorBoundary fallback={<div>Loading...</div>}>
-            <Suspense fallback={<div>Loading...</div>}>
-              <CustomerDetailContent id={id} />
-            </Suspense>
-          </ErrorBoundary>
+          <QueryErrorResetBoundary>
+            {({ reset }) => (
+              <ErrorBoundary
+                onReset={reset}
+                fallbackRender={({ resetErrorBoundary }) => (
+                  <CustomerDetailContentError onReset={resetErrorBoundary} id={id} />
+                )}
+              >
+                <Suspense fallback={<CustomerDetailContentSkeleton />}>
+                  <CustomerDetailContent id={id} />
+                </Suspense>
+              </ErrorBoundary>
+            )}
+          </QueryErrorResetBoundary>
         </div>
       </SheetContent>
     </Sheet>
+  )
+}
+
+const CustomerDetailContentError = ({ onReset, id }: { onReset: () => void; id: string }) => {
+  const { refetch } = useCustomerQuery(id)
+
+  const handleReset = () => {
+    onReset()
+    refetch()
+  }
+
+  return (
+    <div className="flex flex-col gap-4 justify-center items-center h-full">
+      오류가 발생했습니다. 잠시후 다시 시도해주세요
+      <Button onClick={handleReset}>다시 시도</Button>
+    </div>
   )
 }
 
@@ -40,6 +67,14 @@ const CustomerDetailContent = ({ id }: { id: string }) => {
       {data?.map((purchase) => (
         <PurchaseProduct key={purchase.date} {...purchase} />
       ))}
+    </div>
+  )
+}
+
+const CustomerDetailContentSkeleton = () => {
+  return (
+    <div className="flex flex-col gap-4">
+      <PurchaseProduct.Skeleton />
     </div>
   )
 }
