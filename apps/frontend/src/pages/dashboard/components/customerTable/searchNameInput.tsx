@@ -23,7 +23,7 @@ export const SearchNameInput = ({ name, onSubmit, onReset }: SearchNameInputProp
         onChange={(event) => setSearchName(event.target.value)}
         className="max-w-sm"
       />
-      <Button variant="outline" onClick={onReset}>
+      <Button type="button" variant="outline" onClick={onReset}>
         초기화
       </Button>
     </form>
