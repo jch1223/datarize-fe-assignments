@@ -4,7 +4,7 @@ import { useDateRangeFilter } from '@/pages/dashboard/components/dateRangeFilter
 
 export const PriceRangeSalesChart = () => {
   const { dateRange } = useDateRangeFilter()
-  const { data } = usePurchaseFrequencyQuery(dateRange.from, dateRange.to)
+  const { data } = usePurchaseFrequencyQuery({ from: dateRange.from, to: dateRange.to })
 
   return (
     <div className="h-[400px]">
