@@ -8,7 +8,7 @@ interface SearchNameInputProps {
 }
 
 export const SearchNameInput = ({ name, onSubmit, onReset }: SearchNameInputProps) => {
-  const [searchName, setSearchName] = useState(name)
+  const [searchName, setSearchName] = useState(name || '')
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
