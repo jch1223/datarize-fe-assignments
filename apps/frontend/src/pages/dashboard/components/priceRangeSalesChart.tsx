@@ -1,10 +1,10 @@
 import { BarChart } from '@/shared/ui/barChart'
 import { usePurchaseFrequencyQuery } from '../api/analysis/hooks/usePurchaseQuery'
-import { useFilter } from '@/pages/dashboard/hooks/useFilter'
+import { useDateRangeFilter } from '@/pages/dashboard/components/dateRangeFilter/hooks/useDateRangeFilter'
 
 export const PriceRangeSalesChart = () => {
-  const { filter } = useFilter()
-  const { data } = usePurchaseFrequencyQuery(filter.dateRange.from, filter.dateRange.to)
+  const { dateRange } = useDateRangeFilter()
+  const { data } = usePurchaseFrequencyQuery(dateRange.from, dateRange.to)
 
   return (
     <div className="h-[400px]">

@@ -1,4 +1,4 @@
-import { DateRangeFilter } from '@/pages/dashboard/components/dateRangeFilter'
+import { DateRangeFilter } from '@/pages/dashboard/components/dateRangeFilter/dateRangeFilter'
 import { PriceRangeSalesChart } from '@/pages/dashboard/components/priceRangeSalesChart'
 import { ErrorBoundary } from '@/shared/ui/errorBoundary'
 import { Suspense } from 'react'

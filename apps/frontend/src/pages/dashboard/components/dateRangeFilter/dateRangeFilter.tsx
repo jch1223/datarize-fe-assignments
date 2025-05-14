@@ -1,14 +1,14 @@
-import { useFilter } from '@/pages/dashboard/hooks/useFilter'
+import { useDateRangeFilter } from '@/pages/dashboard/components/dateRangeFilter/hooks/useDateRangeFilter'
 import { DatePickerWithRange } from '@/shared/ui/dateRangePicker'
 import { DateRange } from 'react-day-picker'
 
 export const DateRangeFilter = () => {
-  const { filter, updateDateRange, formatDateToIso } = useFilter()
+  const { dateRange, setDateRange, formatDateToIso } = useDateRangeFilter()
 
   const handleApply = (dateRange?: DateRange) => {
     if (!dateRange?.from || !dateRange?.to) return
 
-    updateDateRange({
+    setDateRange({
       from: formatDateToIso(dateRange.from),
       to: formatDateToIso(dateRange.to),
     })
@@ -17,8 +17,8 @@ export const DateRangeFilter = () => {
   return (
     <DatePickerWithRange
       dateRange={{
-        from: new Date(filter.dateRange.from),
-        to: new Date(filter.dateRange.to),
+        from: new Date(dateRange.from),
+        to: new Date(dateRange.to),
       }}
       onApply={handleApply}
     />
