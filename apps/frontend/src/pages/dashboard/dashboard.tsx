@@ -1,3 +1,4 @@
+import { CustomerTable } from '@/pages/dashboard/components/customerTable/customerTable'
 import { DateRangeFilter } from '@/pages/dashboard/components/dateRangeFilter/dateRangeFilter'
 import { PriceRangeSalesChart } from '@/pages/dashboard/components/priceRangeSalesChart'
 import { ErrorBoundary } from '@/shared/ui/errorBoundary'
@@ -16,7 +17,14 @@ export const Dashboard = () => {
         </Suspense>
       </ErrorBoundary>
 
-      <div>테이블</div>
+      <div>
+        {/* TODO: 404 응답 에러 핸들링 */}
+        <ErrorBoundary fallback={<div>Error</div>}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <CustomerTable />
+          </Suspense>
+        </ErrorBoundary>
+      </div>
     </div>
   )
 }
