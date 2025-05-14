@@ -25,4 +25,8 @@ export const customerApi = {
     })
     return response.json()
   },
+  getCustomer: async (id: string) => {
+    const response = await ky.get<Customer>(`${API_URL}/api/customer/${id}/purchases`)
+    return response.json()
+  },
 }
