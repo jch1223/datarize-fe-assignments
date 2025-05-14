@@ -44,14 +44,19 @@ export const useCustomerTable = () => {
 
   const columns: ColumnDef<Customer>[] = [
     {
+      accessorKey: 'id',
+      header: '아이디',
+      cell: ({ row }) => <div>{row.getValue('id')}</div>,
+    },
+    {
       accessorKey: 'name',
       header: '이름',
-      cell: ({ row }) => <div className="capitalize">{row.getValue('name')}</div>,
+      cell: ({ row }) => <div>{row.getValue('name')}</div>,
     },
     {
       accessorKey: 'count',
       header: '주문 횟수',
-      cell: ({ row }) => <div className="lowercase">{Number(row.getValue('count')).toLocaleString()}</div>,
+      cell: ({ row }) => <div>{Number(row.getValue('count')).toLocaleString()}</div>,
     },
     {
       accessorKey: 'totalAmount',
@@ -62,7 +67,7 @@ export const useCustomerTable = () => {
         </Button>
       ),
       cell: ({ row }) => {
-        return <div className="font-medium">{Number(row.getValue('totalAmount')).toLocaleString()}원</div>
+        return <div>{Number(row.getValue('totalAmount')).toLocaleString()}원</div>
       },
     },
   ]
