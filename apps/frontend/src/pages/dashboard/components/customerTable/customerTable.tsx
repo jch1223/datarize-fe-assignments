@@ -6,10 +6,7 @@ import { useCustomersQuery } from '@/pages/dashboard/api/customer/hooks/useCusto
 import { Customer } from '@/pages/dashboard/api/customer/customer'
 import { useCustomerTable } from '@/pages/dashboard/components/customerTable/hooks/useCustomerTable'
 import { SearchNameInput } from '@/pages/dashboard/components/customerTable/searchNameInput'
-import { Sheet, SheetContent, SheetTrigger } from '@/shared/ui/sheet'
-import { CustomerDetail } from '@/pages/dashboard/components/customerDetail/customerDetail'
-import { Suspense } from 'react'
-import { ErrorBoundary } from '@/shared/ui/errorBoundary'
+import { CustomerDetailSheet } from '@/pages/dashboard/components/customerDetailSheet/customerDetailSheet'
 
 export const CustomerTable = () => {
   const { columns, filter, updateName, resetFilter } = useCustomerTable()
@@ -27,14 +24,10 @@ export const CustomerTable = () => {
     resetFilter()
   }
 
-  const handleRowClick = (id: string) => {
-    console.log(id)
-  }
-
   return (
     <div>
       <SearchNameInput name={filter.name} onSubmit={handleNameSubmit} onReset={handleResetFilter} />
-      <CustomerTableImp data={data} columns={columns} onRowClick={handleRowClick} />
+      <CustomerTableImp data={data} columns={columns} />
     </div>
   )
 }
@@ -42,10 +35,9 @@ export const CustomerTable = () => {
 interface CustomerTableProps {
   data: Customer[]
   columns: ColumnDef<Customer>[]
-  onRowClick: (id: string) => void
 }
 
-export function CustomerTableImp({ data, columns, onRowClick }: CustomerTableProps) {
+export function CustomerTableImp({ data, columns }: CustomerTableProps) {
   const table = useReactTable({
     data,
     columns,
@@ -72,24 +64,17 @@ export function CustomerTableImp({ data, columns, onRowClick }: CustomerTablePro
 
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <Sheet key={row.id}>
-                  <SheetTrigger asChild>
-                    <TableRow key={row.id} onClick={() => onRowClick(row.original.id)}>
+              table.getRowModel().rows.map((row) => {
+                return (
+                  <CustomerDetailSheet id={row.original.id} name={row.original.name} key={row.id}>
+                    <TableRow>
                       {row.getVisibleCells().map((cell) => (
                         <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                       ))}
                     </TableRow>
-                  </SheetTrigger>
-                  <SheetContent>
-                    <ErrorBoundary fallback={<div>Error</div>}>
-                      <Suspense fallback={<div>Loading...</div>}>
-                        <CustomerDetail id={row.original.id} />
-                      </Suspense>
-                    </ErrorBoundary>
-                  </SheetContent>
-                </Sheet>
-              ))
+                  </CustomerDetailSheet>
+                )
+              })
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
